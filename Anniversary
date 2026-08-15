@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>year six</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+  @font-face {
+    font-family: 'MyHandDrawn';
+  }
+
+  :root {
+    --pink: #FFB5C0;
+    --paper: #FDFCF8;
+    --ink: #3D3D3D;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'MyHandDrawn', 'Segoe Print', 'Bradley Hand', cursive;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    background: #000;
+  }
+
+  .forest-bg {
+    position: fixed;
+    inset: 0;
+    background-image: url('https://i.pinimg.com/736x/ba/f9/37/baf9378fe869e59d9852e41dd8f0dbb7.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.85);
+    z-index: 0;
+  }
+
+  .dappled-light {
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 30% 40%, rgba(255,255,255,0.15) 0%, transparent 30%),
+      radial-gradient(circle at 70% 60%, rgba(255,255,255,0.1) 0%, transparent 25%),
+      radial-gradient(circle at 50% 80%, rgba(255,255,255,0.08) 0%, transparent 35%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .card-container {
+    position: relative;
+    z-index: 10;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .main-card {
+    background: var(--paper);
+    width: 100%;
+    max-width: 700px;
+    padding: 0;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    animation: floatIn 1.2s ease-out;
+    overflow: visible;
+  }
+
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .main-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+.content {
+  position: relative;
+  z-index: 10;
+  padding: 0;
+}
+
+  .decor-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .main-card.decor-visible .decor-layer {
+    opacity: 1;
+  }
+  .decor-photo {
+    position: absolute;
+    object-fit: contain;
+  }
+
+  @media (max-width: 480px) {
+    .decor-layer {
+      transform: scale(0.75);
+      transform-origin: top center;
+    }
+  }
+
+  .title-image {
+    width: 100%;
+    height: 250px;
+    display: block;
+    object-fit: fill;
+    margin: 50px 0px 0 0px;
+  }
+
+  .step { 
+    display: none; 
+    animation: fadeIn 0.6s ease-out; 
+    padding: 30px 30px 40px 30px; 
+  }
+  .step.active { 
+    display: block; 
+  }
+  @keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(15px); } 
+    to { opacity: 1; transform: translateY(0); } 
+  }
+
+  .next-btn { 
+    background: var(--pink); 
+    color: #fff; 
+    border: none; 
+    padding: 14px 28px; 
+    font-family: 'MyHandDrawn', cursive; 
+    font-size: 1.3rem; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    margin-top: 20px; 
+    transition: transform 0.15s ease; 
+    box-shadow: 0 4px 10px rgba(255, 181, 192, 0.4); 
+  }
+  .next-btn:active { transform: scale(0.96); }
+
+  .page-heading {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 2rem;
+    color: var(--ink);
+  }
+
+  .card-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url('https://i.pinimg.com/1200x/2c/32/63/2c3263e9e39668e5d649f14c6710c806.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+  }
+
+  .custom-body-text {
+    font-family: 'Caveat', cursive; 
+    font-size: 1.4rem; 
+    color: var(--ink);
+    line-height: 1.4;
+    text-align: center;
+    margin-bottom: 4px; 
+  }
+
+  .split-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px; 
+    font-family: 'Caveat', cursive; 
+    font-size: 1.3rem; 
+    color: var(--ink);
+  }
+
+  .png-next-btn {
+    display: block;
+    margin: 20px auto 0;
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+  }
+  .png-next-btn:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.15));
+  }
+
+  .bottom-placeholder-img {
+    width: calc(100% + 24px);
+    height: auto;
+    margin: 10px -12px 18px -12px;
+    border-radius: 0;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  #step-1 {
+    padding-bottom: 0;
+  }
+
+  .animation-trigger {
+    margin: 30px 0 20px 0;
+    padding: 10px 0;
+    position: relative;
+  }
+
+  .collision-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .collide-photo {
+    width: 110px;
+    height: auto;
+    display: block;
+  }
+  .collide-left {
+    transform: translateX(-120px);
+    transition: transform 5s ease-in-out;
+  }
+  .collide-right {
+    transform: translateX(120px);
+    transition: transform 5s ease-in-out;
+  }
+  .collision-row.collided .collide-left,
+  .collision-row.collided .collide-right {
+    transform: translateX(0);
+  }
+  .collision-row.collided .collide-left,
+  .collision-row.collided .collide-right {
+    opacity: 0;
+    transition: transform 5s ease-in-out, opacity 0.5s ease 4.5s;
+  }
+
+  .clash-trigger-photo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    z-index: 2;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+  }
+  .clash-trigger-photo:active {
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  .collision-row.collided ~ .clash-trigger-photo {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease 4.5s;
+  }
+
+  .button-reveal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    max-width: 350px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .button-reveal-container.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+  }
+
+  .intermission-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 20px 0 10px 0;
+  }
+  .intermission-item {
+    text-align: center;
+  }
+  .intermission-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  .intermission-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 1.25rem;
+    color: var(--ink);
+    margin-top: 8px;
+  }
+
+  #quizContainer { margin: 20px 0; }
+  .quiz-question-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quiz-option {
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    background: #fff;
+    border: 2px solid var(--pink);
+    color: var(--ink);
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s ease, transform 0.1s ease;
+  }
+  .quiz-option:active { transform: scale(0.98); }
+  .quiz-option.correct { background: #cdeecb; border-color: #6bbf6b; }
+  .quiz-option.wrong { background: #f6cccc; border-color: #d97373; }
+  .quiz-progress {
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .win-prize-photo {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    display: block;
+    margin: 14px auto 20px auto;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    border-radius: 6px;
+  }
+
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    max-width: 320px;
+    margin: 20px auto;
+  }
+  .memory-card {
+    aspect-ratio: 1;
+    background: var(--pink);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: transform 0.15s ease, background 0.2s ease;
+    overflow: hidden;
+  }
+  .memory-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .memory-card.flipped,
+  .memory-card.matched {
+    background: #fff;
+    border: 2px solid var(--pink);
+  }
+  .memory-card.matched {
+    opacity: 0.55;
+    cursor: default;
+  }
+  .memory-card:active:not(.flipped):not(.matched) {
+    transform: scale(0.94);
+  }
+  .memory-free-tile {
+    background: var(--pink);
+    cursor: default;
+  }
+
+  .scratch-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 3;
+    margin: 20px auto;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .scratch-prize-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .scratch-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    touch-action: none;
+    transition: opacity 0.6s ease;
+  }
+
+  .floating-disc {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: repeating-radial-gradient(circle at center, #2a2a2a 0px, #2a2a2a 2px, #050505 3px, #050505 6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: spinDisc 5s linear infinite;
+    z-index: 9999;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .floating-disc:hover {
+    transform: scale(1.1);
+  }
+  .floating-disc .vinyl-label {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--pink);
+    box-shadow: inset 0 0 0 2px #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .floating-disc .vinyl-center-dot {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  @keyframes spinDisc {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 480px) {
+    .floating-disc {
+      width: 70px;
+      height: 70px;
+      bottom: 20px;
+      right: 20px;
+    }
+    .floating-disc .vinyl-label {
+      width: 24px;
+      height: 24px;
+    }
+    .floating-disc .vinyl-center-dot {
+      width: 4px;
+      height: 4px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="forest-bg"></div>
+  <div class="dappled-light"></div>
+
+  <div class="card-container">
+  <div class="main-card decor-visible" id="mainCard">
+
+    <div class="card-texture"></div>
+
+    <div class="decor-layer">
+
+      <img class="decor-photo" src="https://i.imgur.com/VssaT27.png"
+           alt="Placeholder 1"
+           style="top:-24px; right:-24px; width:125px; height:70px; transform:rotate(6deg);">
+
+      <img class="decor-photo" src="https://i.imgur.com/bfcNQlx.png"
+           alt="Placeholder 2"
+           style="top:20px; left:320px; width:120px; height:62px; transform:rotate(3deg);">
+
+      <img class="decor-photo" src="https://i.imgur.com/O5sBTIU.png"
+           alt="Placeholder 3"
+           style="top:190px; left:200px; width:343px; height:89px; transform:rotate(-2deg);">
+
+      <img class="decor-photo" src="https://i.imgur.com/rqMo596.png"
+           alt="Placeholder 4"
+           style="top:280px; right:-40px; width:144px; height:93px; transform:rotate(5deg);">
+
+      <img class="decor-photo" src="https://i.imgur.com/Fy1mhff.png"
+           alt="Placeholder 5"
+           style="top:430px; left:-30px; width:98px; height:120px; transform:rotate(-4deg);">
+
+      <img class="decor-photo" src="https://i.imgur.com/FSQoCMi.png"
+           alt="Placeholder 6"
+           style="bottom:-23px; right:0px; width:153px; height:214px;">
+
+      <img class="decor-photo" src="https://i.imgur.com/IIuPwnp.png"
+           alt="Placeholder 12"
+           style="top:30px; left:-100px; width:188px; height:105px; transform:rotate(-8deg);">
+
+      <img class="decor-photo" src="https://i.imgur.com/cVjK9W0.png"
+           alt="Placeholder 14"
+           style="bottom:-40px; left:60px; width:188px; height:105px;">
+
+    </div>
+
+    <div class="content">
+      <img src="https://i.imgur.com/fOUcSOo.png" alt="Happy Anniversary!" class="title-image">
+
+        <div id="step-1" class="step active">
+
+          <p class="custom-body-text" id="centerText">Happy 6th Anniversary, bunny!</p>
+
+          <div class="animation-trigger">
+            <div class="collision-row" id="collisionRow">
+              <img class="collide-photo collide-left" src="https://i.imgur.com/shAhL22.png" alt="Placeholder 15">
+              <img class="collide-photo collide-right" src="https://i.imgur.com/l4m9stU.png" alt="Placeholder 16">
+            </div>
+
+            <img id="clashTriggerPhoto" class="decor-photo clash-trigger-photo"
+                 src="https://i.imgur.com/ZCe6Szt.png"
+                 alt="Placeholder 8"
+                 onclick="triggerCollision()">
+
+            <div class="button-reveal-container" id="revealBtn">
+              <img src="https://i.imgur.com/aSznq5F.png" 
+                   alt="Let's go" 
+                   class="png-next-btn" 
+                   onclick="goToStep(2)">
+            </div>
+          </div>
+
+          <img id="bottomPhoto" src="https://i.imgur.com/2CAzqmk.png"
+               alt="Placeholder 9" class="bottom-placeholder-img">
+
+        </div>
+
+        <div id="step-2" class="step">
+          <h2 class="page-heading">Hello bunny!</h2>
+          <p class="custom-body-text">I made this little interactive website for you, this might be short but it still took me some time to make. (Intermission lang tong part na to hahahaha) I hope you enjoy bunny</p>
+
+          <div class="intermission-grid">
+            <div class="intermission-item">
+              <img class="intermission-photo" src="https://i.imgur.com/CEEIMl9.jpeg" alt="Placeholder 17">
+              <p class="intermission-caption">angas natin dito dalawa bae nohh para tayong ano eh celebrity na #hubmle lng</p>
+            </div>
+            <div class="intermission-item">
+              <img class="intermission-photo" src="https://i.imgur.com/GYebDcF.jpeg" alt="Placeholder 18">
+              <p class="intermission-caption">LALAAAAAA</p>
+            </div>
+            <div class="intermission-item">
+              <img class="intermission-photo" src="https://i.imgur.com/lFPeaRX.jpeg" alt="Placeholder 19">
+              <p class="intermission-caption">hehehe so cute natin</p>
+            </div>
+          </div>
+
+          <div style="text-align:center;">
+            <button class="next-btn" onclick="goToStep(3)">Continue →</button>
+          </div>
+        </div>
+
+        <div id="step-3" class="step">
+          <h2 class="page-heading">Test muna bago ka magstart ng school</h2>
+          <p class="custom-body-text">Short quiz to see if ikaw talaga yan</p>
+
+          <div class="quiz-progress" id="quizProgress"></div>
+          <div id="quizContainer"></div>
+
+          <div id="quizResult" style="display:none; text-align:center; margin-top:10px;">
+            <p class="custom-body-text" id="quizScoreText"></p>
+            <h2 class="page-heading" style="margin-top:16px;">You won!</h2>
+            <img src="https://i.imgur.com/jgxaZXT.png" alt="Placeholder 21" class="win-prize-photo">
+            <button class="next-btn" onclick="goToStep(4)">Continue →</button>
+          </div>
+        </div>
+
+        <div id="step-4" class="step">
+          <h2 class="page-heading" id="step4Heading">Complete the challenge for a prize</h2>
+          <p class="custom-body-text" id="step4Instructions">Match all 8 pairs</p>
+
+          <div class="memory-grid" id="memoryGrid"></div>
+
+          <div class="scratch-wrap" id="scratchWrap" style="display:none;">
+            <img class="scratch-prize-img" src="https://i.imgur.com/sA1Lyjh.png" alt="Placeholder 20">
+            <canvas class="scratch-canvas" id="scratchCanvas"></canvas>
+          </div>
+
+          <div id="scratchContinue" style="display:none; text-align:center; margin-top:10px;">
+            <h2 class="page-heading">Congratulations!</h2>
+            <button class="next-btn" onclick="goToStep(5)">Continue →</button>
+          </div>
+        </div>
+
+        <div id="step-5" class="step">
+          <img src="https://i.imgur.com/5Ld8OXm.png" 
+               alt="My Love Letter to You" 
+               style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goToStep(stepNumber) {
+      const allSteps = document.querySelectorAll('.step');
+      allSteps.forEach(step => step.classList.remove('active'));
+      const nextStep = document.getElementById('step-' + stepNumber);
+      if (nextStep) {
+        nextStep.classList.add('active');
+      }
+
+      const mainCard = document.getElementById('mainCard');
+      mainCard.classList.toggle('decor-visible', stepNumber === 1);
+
+      if (stepNumber === 3) initQuiz();
+      if (stepNumber === 4) initMemoryMatch();
+    }
+
+    let hasCollided = false;
+
+    function triggerCollision() {
+      if (hasCollided) return; 
+      hasCollided = true;
+
+      const row = document.getElementById('collisionRow');
+      const btn = document.getElementById('revealBtn');
+      const text = document.getElementById('centerText');
+
+      row.classList.add('collided');
+
+      setTimeout(() => {
+        btn.classList.add('show');
+        text.textContent = "Please press the bunny below to continue.";
+      }, 5000);
+    }
+
+    const quizQuestions = [
+      {
+        question: "What's my favorite food?",
+        options: ["Pizza", "Laing", "Siopao sa 7/11"],
+        correct: 0
+      },
+      {
+        question: "What's my favorite song right now?",
+        options: ["Yeye Vonnel by April Boy Regino", "White Meadows by Bladee & Ecco2K", "Astronaut in the Ocean by Masked Wolf"],
+        correct: 1
+      },
+      {
+        question: "Do you love me?",
+        options: ["Nope", "NO", "Yes sir"],
+        correct: 2
+      }
+    ];
+
+    let quizIndex = 0;
+    let quizScore = 0;
+    let quizInitialized = false;
+
+    function initQuiz() {
+      if (quizInitialized) return;
+      quizInitialized = true;
+      quizIndex = 0;
+      quizScore = 0;
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      const container = document.getElementById('quizContainer');
+      const progress = document.getElementById('quizProgress');
+      const resultBox = document.getElementById('quizResult');
+
+      if (quizIndex >= quizQuestions.length) {
+        container.innerHTML = '';
+        progress.textContent = '';
+        resultBox.style.display = 'block';
+        document.getElementById('quizScoreText').textContent =
+          "Wowww " + quizScore + " out of " + quizQuestions.length + " score mo nice one";
+        return;
+      }
+
+      const q = quizQuestions[quizIndex];
+      progress.textContent = "Question " + (quizIndex + 1) + " of " + quizQuestions.length;
+
+      let html = '<p class="quiz-question-text">' + q.question + '</p><div class="quiz-options">';
+      q.options.forEach((opt, i) => {
+        html += '<button class="quiz-option" onclick="answerQuiz(' + i + ')">' + opt + '</button>';
+      });
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function answerQuiz(selectedIndex) {
+      const q = quizQuestions[quizIndex];
+      const buttons = document.querySelectorAll('#quizContainer .quiz-option');
+      buttons.forEach(b => b.onclick = null);
+
+      buttons[q.correct].classList.add('correct');
+      if (selectedIndex !== q.correct) {
+        buttons[selectedIndex].classList.add('wrong');
+      } else {
+        quizScore++;
+      }
+
+      setTimeout(() => {
+        quizIndex++;
+        renderQuizQuestion();
+      }, 900);
+    }
+
+    let memoryInitialized = false;
+    let memoryFlipped = [];
+    let memoryMatchedCount = 0;
+    let memoryLocked = false;
+
+    const memoryPhotos = [
+     "https://i.imgur.com/a5k0HyO.jpeg",
+      "https://i.imgur.com/rvIUHAC.jpeg",
+      "https://i.imgur.com/yyWJRVX.jpeg",
+      "https://i.imgur.com/PHhJWYJ.jpeg",
+      "https://i.imgur.com/LdPuMjy.jpeg",
+      "https://i.imgur.com/UGfNA5b.jpeg",
+      "https://i.imgur.com/s8mS4hS.jpeg",
+      "https://i.imgur.com/C6jWV1N.jpeg"
+    ];
+
+    function initMemoryMatch() {
+      if (memoryInitialized) return;
+      memoryInitialized = true;
+
+      const deck = [...memoryPhotos, ...memoryPhotos].sort(() => Math.random() - 0.5);
+
+      const grid = document.getElementById('memoryGrid');
+      grid.innerHTML = '';
+
+      let deckIndex = 0;
+      for (let i = 0; i < 16; i++) {
+        const src = deck[deckIndex];
+        deckIndex++;
+
+        const el = document.createElement('div');
+        el.className = 'memory-card';
+        el.dataset.src = src;
+        el.onclick = () => flipMemoryCard(el);
+        grid.appendChild(el);
+      }
+    }
+
+    function flipMemoryCard(el) {
+      if (memoryLocked) return;
+      if (el.classList.contains('flipped') || el.classList.contains('matched')) return;
+      if (memoryFlipped.length === 2) return;
+
+      el.classList.add('flipped');
+      el.innerHTML = '<img class="memory-card-img" src="' + el.dataset.src + '" alt="Placeholder photo">';
+      memoryFlipped.push(el);
+
+      if (memoryFlipped.length === 2) {
+        const [a, b] = memoryFlipped;
+        if (a.dataset.src === b.dataset.src) {
+          a.classList.add('matched');
+          b.classList.add('matched');
+          memoryFlipped = [];
+          memoryMatchedCount++;
+          if (memoryMatchedCount === memoryPhotos.length) {
+            setTimeout(unlockScratchCard, 500);
+          }
+        } else {
+          memoryLocked = true;
+          setTimeout(() => {
+            a.classList.remove('flipped');
+            b.classList.remove('flipped');
+            a.innerHTML = '';
+            b.innerHTML = '';
+            memoryFlipped = [];
+            memoryLocked = false;
+          }, 700);
+        }
+      }
+    }
+
+    function unlockScratchCard() {
+      document.getElementById('memoryGrid').style.display = 'none';
+      document.getElementById('step4Heading').textContent = 'Scratch to reveal your prize!';
+      document.getElementById('step4Instructions').textContent = 'GOGOGOOGOGOGOOGOGO';
+      document.getElementById('scratchWrap').style.display = 'block';
+      initScratchCard();
+    }
+
+    let scratchInitialized = false;
+
+    function initScratchCard() {
+      if (scratchInitialized) return;
+      scratchInitialized = true;
+
+      const canvas = document.getElementById('scratchCanvas');
+      const wrap = document.getElementById('scratchWrap');
+      const ctx = canvas.getContext('2d');
+
+      function sizeCanvas() {
+        canvas.width = wrap.clientWidth;
+        canvas.height = wrap.clientHeight;
+        ctx.fillStyle = '#cfcfcf';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = "bold " + Math.floor(canvas.width / 14) + "px sans-serif";
+        ctx.fillStyle = '#8a8a8a';
+        ctx.textAlign = 'center';
+        ctx.fillText('Scratch here!', canvas.width / 2, canvas.height / 2);
+      }
+      sizeCanvas();
+
+      let isDrawing = false;
+      let revealChecked = 0;
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const point = e.touches ? e.touches[0] : e;
+        return {
+          x: (point.clientX - rect.left) * (canvas.width / rect.width),
+          y: (point.clientY - rect.top) * (canvas.height / rect.height)
+        };
+      }
+
+      function scratchAt(x, y) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 28, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function checkRevealPercent() {
+        revealChecked++;
+        if (revealChecked % 8 !== 0) return;
+        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        let transparent = 0;
+        const total = data.length / 4;
+        for (let i = 3; i < data.length; i += 4 * 20) {
+          if (data[i] === 0) transparent++;
+        }
+        const percent = transparent / (total / 20);
+        if (percent > 0.5) {
+          canvas.style.opacity = '0';
+          canvas.style.pointerEvents = 'none';
+          document.getElementById('scratchContinue').style.display = 'block';
+        }
+      }
+
+      function startDraw(e) {
+        isDrawing = true;
+        const p = getPos(e);
+        scratchAt(p.x, p.y);
+      }
+      function moveDraw(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const p = getPos(e);
+        scratchAt(p.x, p.y);
+        checkRevealPercent();
+      }
+      function endDraw() { isDrawing = false; }
+
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', moveDraw);
+      canvas.addEventListener('mouseup', endDraw);
+      canvas.addEventListener('mouseleave', endDraw);
+      canvas.addEventListener('touchstart', startDraw);
+      canvas.addEventListener('touchmove', moveDraw);
+      canvas.addEventListener('touchend', endDraw);
+
+      window.addEventListener('resize', sizeCanvas);
+    }
+  </script>
+
+  <div class="floating-disc" onclick="window.open('https://open.spotify.com/track/3Xh9p0irRLUX83LSt22x4g', '_blank')" title="Our Song: Pollen by Ecco2K">
+    <div class="vinyl-label">
+      <div class="vinyl-center-dot"></div>
+    </div>
+  </div>
+</body>
+</html>
